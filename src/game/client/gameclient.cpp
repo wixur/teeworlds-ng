@@ -401,6 +401,7 @@ void GAMECLIENT::on_reset()
 		clients[i].skin_info.color_body = vec4(1,1,1,1);
 		clients[i].skin_info.color_feet = vec4(1,1,1,1);
 		clients[i].update_render_info();
+		mem_zero(&clients[i].stats, sizeof(clients[i].stats));
 	}
 	
 	for(int i = 0; i < all.num; i++)
@@ -450,6 +451,99 @@ static void evolve(NETOBJ_CHARACTER *character, int tick)
 
 void GAMECLIENT::on_render()
 {
+
+	//if (client_state() != CLIENTSTATE_DEMOPLAYBACK)
+	{
+		static bool old_game_over;
+		static bool restarted_game_record = false;
+		static int autorecord_start_time = 0;
+/*		if (client_tick() > tick_to_screenshot && tick_to_screenshot >= 0 && client_state() != CLIENTSTATE_DEMOPLAYBACK)
+		{
+			gfx_screenshot();
+			tick_to_screenshot = -1;
+		}
+		if (snap.gameobj && snap.gameobj->game_over && !old_game_over && client_state() != CLIENTSTATE_DEMOPLAYBACK)
+		{
+			if (config.cl_gameover_screenshot) tick_to_screenshot = client_tick() + client_tickspeed() * 7; //7 secs
+		}*/
+		static void * old_gameobj = NULL;
+		if (snap.gameobj && ((client_tick() - snap.gameobj->round_start_tick) < client_tickspeed() * 0.1f))
+		{
+			if (!restarted_game_record)
+				old_game_over = true;
+			restarted_game_record = true;
+		} else restarted_game_record = false;
+
+		if (!old_gameobj && snap.gameobj) old_game_over = true;
+		old_gameobj = (void *)snap.gameobj;
+
+/*		if (config.cl_autorecord && autorecord_start_time != 0 && !demorec_isrecording() && demorec_last_filename() != NULL &&
+			abs(client_tick() - autorecord_start_time) / client_tickspeed() < config.cl_autorecord_time &&
+			client_state() != CLIENTSTATE_DEMOPLAYBACK)
+		{
+			dbg_msg("autodemo", "%s", demorec_last_filename());
+			fs_remove(demorec_last_filename());
+			autorecord_start_time = 0;
+		}*/
+
+/*		if (snap.gameobj && !snap.gameobj->game_over && old_game_over && client_state() != CLIENTSTATE_DEMOPLAYBACK)
+		{
+			if (config.cl_autorecord)
+			{
+				if (abs(client_tick() - autorecord_start_time) / client_tickspeed() < config.cl_autorecord_time)
+					console_execute_line("purgerecord");
+				else
+					console_execute_line("stoprecord");
+				autorecord_start_time = 0;
+				console_execute_line("record");
+				autorecord_start_time = client_tick();
+			}
+		}*/
+
+		if (snap.gameobj && !snap.gameobj->game_over && old_game_over)
+		{
+			for (int i = 0; i < MAX_CLIENTS; i++)
+				mem_zero(&clients[i].stats, sizeof(clients[i].stats));
+		}
+
+		old_game_over = snap.gameobj ? snap.gameobj->game_over : true;
+	}
+
+	for (int i = 0; i < MAX_CLIENTS; i++)
+	{
+		if (clients[i].team != clients[i].last_team)
+		{
+			mem_zero(&clients[i].stats, sizeof(clients[i].stats));
+			clients[i].last_team = clients[i].team;
+		}
+	}
+
+	if (snap.gameobj && snap.gameobj->flags&GAMEFLAG_FLAGS && new_tick)
+	{
+		int num = snap_num_items(SNAP_CURRENT);
+		for(int i = 0; i < num; i++)
+		{
+			SNAP_ITEM item;
+			const void *data = snap_get_item(SNAP_CURRENT, i, &item);
+
+			if(item.type == NETOBJTYPE_FLAG)
+			{
+				const void *prev = snap_find_item(SNAP_PREV, item.type, item.id);
+
+				if (!data || !prev) continue;
+
+				if (((const NETOBJ_FLAG *)prev)->carried_by < 0 && ((const NETOBJ_FLAG *)data)->carried_by >= 0)
+				{
+					clients[((const NETOBJ_FLAG *)data)->carried_by].stats.flag_carried++;
+				}
+				if (((const NETOBJ_FLAG *)prev)->carried_by >= 0 && ((const NETOBJ_FLAG *)data)->carried_by == -2)
+				{
+					clients[((const NETOBJ_FLAG *)prev)->carried_by].stats.flag_lost++;
+				}
+			}
+		}
+	}
+
 	// update the local character position
 	update_local_character_pos();
 	
@@ -541,7 +635,22 @@ void GAMECLIENT::on_message(int msgtype)
 			
 		NETMSG_SV_SOUNDGLOBAL *msg = (NETMSG_SV_SOUNDGLOBAL *)rawmsg;
 		gameclient.sounds->play(SOUNDS::CHN_GLOBAL, msg->soundid, 1.0f, vec2(0,0));
-	}		
+	}		 else if(msgtype == NETMSGTYPE_SV_KILLMSG)
+	{
+		NETMSG_SV_KILLMSG *msg = (NETMSG_SV_KILLMSG *)rawmsg;
+
+		if (msg->killer != msg->victim)
+		{
+			if (msg->weapon >= WEAPON_HAMMER && msg->weapon < NUM_WEAPONS)
+				clients[msg->killer].stats.kills[msg->weapon]++;
+			clients[msg->killer].stats.total_kills++;
+		}
+
+		if (msg->weapon >= WEAPON_HAMMER && msg->weapon < NUM_WEAPONS)
+			clients[msg->victim].stats.killed[msg->weapon]++;
+		clients[msg->victim].stats.total_killed++;
+	}
+
 }
 
 void GAMECLIENT::on_statechange(int new_state, int old_state)

@@ -167,7 +167,11 @@ void MENUS::render_settings_player(RECT main_view)
 				config.cl_nameplates_shadow ^= 1;
 		
 		}
-			
+
+		ui_hsplit_t(&main_view, 20.0f, &button, &main_view);
+		if (ui_do_button(&config.cl_new_scoreboard, localize("Use new scoreboard"), config.cl_new_scoreboard, &button, ui_draw_checkbox, 0))
+			config.cl_new_scoreboard ^= 1;
+
 		ui_hsplit_t(&main_view, 20.0f, &button, &main_view);
 		
 		ui_hsplit_t(&main_view, 20.0f, &button, &main_view);

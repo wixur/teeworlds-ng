@@ -7,9 +7,11 @@ class SCOREBOARD : public COMPONENT
 	void render_scoreboard(float x, float y, float w, int team, const char *title);
 
 	static void con_key_scoreboard(void *result, void *user_data);
-	
+
+	void render_new();
+
 	bool active;
-	
+
 public:
 	SCOREBOARD();
 	virtual void on_reset();

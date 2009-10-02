@@ -54,6 +54,25 @@ MACRO_CONFIG_INT(cl_laser_color_green_inline, 500, 0, 1000, CFGFLAG_CLIENT|CFGFL
 MACRO_CONFIG_INT(cl_laser_color_blue_inline, 1000, 0, 1000, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Laser color blue outline")
 MACRO_CONFIG_INT(cl_nameplates_shadow, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Nameplates shadow")
 MACRO_CONFIG_INT(cl_show_ghost, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Show latency ghost behind you")
+MACRO_CONFIG_INT(gfx_custom_hud_colors, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Custom hud colors")
+MACRO_CONFIG_INT(cl_new_scoreboard, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Use new scoreboard")
+
+MACRO_CONFIG_INT(gfx_red_hud_color_r, 255, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+MACRO_CONFIG_INT(gfx_red_hud_color_g, 127, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+MACRO_CONFIG_INT(gfx_red_hud_color_b, 127, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+
+MACRO_CONFIG_INT(gfx_blue_hud_color_r, 127, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+MACRO_CONFIG_INT(gfx_blue_hud_color_g, 159, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+MACRO_CONFIG_INT(gfx_blue_hud_color_b, 255, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+
+MACRO_CONFIG_INT(gfx_player_hud_color_r, 255, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+MACRO_CONFIG_INT(gfx_player_hud_color_g, 255, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+MACRO_CONFIG_INT(gfx_player_hud_color_b, 255, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+
+MACRO_CONFIG_INT(gfx_spectator_hud_color_r, 192, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+MACRO_CONFIG_INT(gfx_spectator_hud_color_g, 192, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+MACRO_CONFIG_INT(gfx_spectator_hud_color_b, 192, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+
 /* server */
 MACRO_CONFIG_INT(sv_warmup, 0, 0, 0, CFGFLAG_SERVER, "Number of seconds to do warpup before round starts")
 MACRO_CONFIG_STR(sv_motd, 900, "", CFGFLAG_SERVER, "Message of the day to display for the clients")
