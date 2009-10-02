@@ -14,7 +14,7 @@ All
 == Все
 
 Alpha
-== Прозрачность
+== Проз-сть
 
 Always show name plates
 == Всегда показывать имена
@@ -441,6 +441,13 @@ Green
 
 Blue
 == Синий
+
+Autoconnect to server
+== Автоподкл. к серверу
+
+== Use new scoreboard
+Использовать новое табло
+
 ##### needs translation ####
 
 ##### old translations ####
