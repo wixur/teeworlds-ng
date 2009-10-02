@@ -27,9 +27,13 @@ void NAMEPLATES::render_nameplate(
 			
 		const char *name = gameclient.clients[player_info->cid].name;
 		float tw = gfx_text_width(0, 28.0f, name, -1);
+		if(config.cl_nameplates_shadow) // from teecomp
+		{
+			gfx_text_color(0,0,0,0.5f);
+			gfx_text(0, position.x-tw/2.0f+2, position.y-60+2, 28.0f, name, -1);
+		}
 		gfx_text_color(1,1,1,a);
 		gfx_text(0, position.x-tw/2.0f, position.y-60, 28.0f, name, -1);
-		
 		if(config.debug) // render client id when in debug aswell
 		{
 			char buf[128];

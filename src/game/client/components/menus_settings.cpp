@@ -160,6 +160,12 @@ void MENUS::render_settings_player(RECT main_view)
 			ui_vsplit_l(&button, 15.0f, 0, &button);
 			if (ui_do_button(&config.cl_nameplates_always, localize("Always show name plates"), config.cl_nameplates_always, &button, ui_draw_checkbox, 0))
 				config.cl_nameplates_always ^= 1;
+
+			ui_hsplit_t(&main_view, 20.0f, &button, &main_view);
+			ui_vsplit_l(&button, 15.0f, 0, &button);
+			if (ui_do_button(&config.cl_nameplates_shadow, localize("Nameplates shadow"), config.cl_nameplates_shadow, &button, ui_draw_checkbox, 0))
+				config.cl_nameplates_shadow ^= 1;
+		
 		}
 			
 		ui_hsplit_t(&main_view, 20.0f, &button, &main_view);

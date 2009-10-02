@@ -20,7 +20,7 @@ extern "C" {
 
 void DEBUGHUD::render_netcorrections()
 {
-	if(!config.debug || !gameclient.snap.local_character || !gameclient.snap.local_prev_character)
+	if(!config.debug || !gameclient.snap.local_character || !gameclient.snap.local_prev_character || !config.cl_show_ghost)
 		return;
 
 	gfx_mapscreen(0, 0, 300*gfx_screenaspect(), 300);

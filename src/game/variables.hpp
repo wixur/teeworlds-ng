@@ -52,7 +52,8 @@ MACRO_CONFIG_INT(cl_laser_color_blue_outline, 250, 0, 1000, CFGFLAG_CLIENT|CFGFL
 MACRO_CONFIG_INT(cl_laser_color_red_inline, 500, 0, 1000, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Laser color red outline")
 MACRO_CONFIG_INT(cl_laser_color_green_inline, 500, 0, 1000, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Laser color green outline")
 MACRO_CONFIG_INT(cl_laser_color_blue_inline, 1000, 0, 1000, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Laser color blue outline")
-
+MACRO_CONFIG_INT(cl_nameplates_shadow, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Nameplates shadow")
+MACRO_CONFIG_INT(cl_show_ghost, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Show latency ghost behind you")
 /* server */
 MACRO_CONFIG_INT(sv_warmup, 0, 0, 0, CFGFLAG_SERVER, "Number of seconds to do warpup before round starts")
 MACRO_CONFIG_STR(sv_motd, 900, "", CFGFLAG_SERVER, "Message of the day to display for the clients")

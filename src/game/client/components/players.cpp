@@ -402,12 +402,15 @@ void PLAYERS::render_player(
 	}
 
 	// render the "shadow" tee
-	if(info.local && config.debug)
+	if(info.local && config.debug || info.local && config.cl_show_ghost)
 	{
 		vec2 ghost_position = mix(vec2(prev_char->x, prev_char->y), vec2(player_char->x, player_char->y), client_intratick());
-		TEE_RENDER_INFO ghost = render_info;
-		ghost.color_body.a = 0.5f;
-		ghost.color_feet.a = 0.5f;
+		TEE_RENDER_INFO ghost = ghost;
+		int skin = gameclient.skins->find("default");
+		ghost.texture = gameclient.skins->get(skin)->org_texture;
+		ghost.size = 64.0f;
+		ghost.color_body = vec4(0.7f,0.0f,0.25f,0.0f);
+		ghost.color_feet = vec4(1,1,1,0);
 		render_tee(&state, &ghost, player.emote, direction, ghost_position); // render ghost
 	}
 
