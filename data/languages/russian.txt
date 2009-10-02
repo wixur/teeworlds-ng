@@ -1,0 +1,433 @@
+
+##### translated strings #####
+
+%d of %d servers, %d players
+== %d из %d серверов, %d игроков
+
+Abort
+== Отмена
+
+Address
+== Адрес 
+
+All
+== Все
+
+Alpha
+== Прозрачность
+
+Always show name plates
+== Всегда показывать имена
+
+Are you sure that you want to quit?
+== Вы действительно желаете выйти из игры?
+
+As this is the first time you launch the game, please enter your nick name below. It's recommended that you check the settings to adjust them to your liking before joining a server.
+== Поскольку это первый раз, когда вы запускаете игру, пожалуйста, введите ваш ник ниже. Рекомендуется проверить настройки, чтобы настроить их по своему усмотрению до подключения к сервера.
+
+Blue team
+== Синяя команда
+
+Blue team wins!
+== Синяя команда выйграла
+
+Body
+== Тело
+
+Call vote
+== Голосование
+
+Chat
+== Чат
+
+Close
+== Закрыть
+
+Compatible version
+== Совместимая версия
+
+Connect
+== Подключиться
+
+Connecting to
+== Подключение к
+
+Console
+== Консоль
+
+Controls
+== Управление
+
+Current
+== Текущая
+
+Current version: %s
+== Текущая версия: %s
+
+Custom colors
+== Свой цвет
+
+Demos
+== Демо
+
+Disconnect
+== Отключиться
+
+Disconnected
+== Отключен
+
+Display Modes
+== Показать режимы
+
+Downloading map
+== Загрузка карты
+
+Draw!
+== Ничья!
+
+Dynamic Camera
+== Динамическая камера
+
+Emoticon
+== Эмоции
+
+Enter
+== Вход
+
+FSAA samples
+== Сглаживание
+
+Favorite
+== Любимый
+
+Favorites
+== Любимые
+
+Feet
+== Ступни
+
+Filter
+== Фильтр
+
+Fire
+== Огонь
+
+Fullscreen
+== Полноэкранный
+
+Game
+== Игра
+
+Game info
+== Инфо
+
+Game over
+== Игра окончена
+
+Game type
+== Тип игры
+
+Game types
+== Типы игр
+
+General
+== Главный
+
+Graphics
+== Графика
+
+Grenade
+== Граната
+
+Hammer
+== Молоток
+
+Has people playing
+== Играют на сервере
+
+High Detail
+== Высокая детализация
+
+Hook
+== Крюк
+
+Host address
+== Адрес хоста
+
+Hue
+== Оттенок
+
+Info
+== Инфо
+
+Internet
+== Интернет
+
+Join blue
+== За синих
+
+Join game
+== Играть
+
+Join red
+== За красных
+
+Jump
+== Прыжок
+
+Kick
+== Выгнать
+
+LAN
+== ЛВС
+
+Language
+== Язык
+
+Lht.
+== Яркость
+
+Loading
+== Загрузка
+
+MOTD
+== MOTD
+
+Map
+== Карта
+
+Maximum ping
+== Макс. задержка
+
+Miscellaneous
+== Прочее
+
+Mouse sens.
+== Чув-cть мыши
+
+Move left
+== Идти влево
+
+Move right
+== Идти вправо
+
+Movement
+== Перемещение
+
+Mute when not active
+== Приглушить, если окно неактивно
+
+Name
+== Имя
+
+News
+== Новости
+
+Next weapon
+== Следующее 
+
+Nickname
+== Ник
+
+No
+== Нет
+
+No password
+== Без пароля
+
+No servers found
+== Сервера не найдены
+
+No servers match your filter criteria
+== Нет серверов, удовлетворяющих вашему запросу
+
+Ok
+== ОК
+
+Password
+== Пароль
+
+Password Incorrect
+== Пароль неверный
+
+Ping
+== Пинг
+
+Pistol
+== Пистолет
+
+Play
+== Играть
+
+Player
+== Игрок
+
+Players
+== Игроки
+
+Prev. weapon
+== Предыдущее
+
+Quality Textures
+== Высококачественные текстуры
+
+Quick search
+== Поиск
+
+Quit
+== Выход
+
+Red team
+== Красная команда
+
+Red team wins!
+== Красная команда выйграла!
+
+Refresh
+== Обновить
+
+Refreshing master servers
+== Обновление мастер серверов
+
+Remote console
+== Удаленная консоль
+
+Reset filter
+== Сбросить фильтр
+
+Reset to defaults
+== Сбросить настройки
+
+Rifle
+== Лазер
+
+Round
+== Раунд
+
+Sample rate
+== Частота
+
+Sat.
+== Нас. 
+
+Score
+== Счет
+
+Score board
+== Счет игры
+
+Score limit
+== Лимит
+
+Scoreboard
+== Счет игры
+
+Screenshot
+== Скриншот
+
+Server details
+== О сервере
+
+Server info
+== О Сервере
+
+Server not full
+== Не полный
+
+Settings
+== Настройки
+
+Shotgun
+== Дробовик
+
+Show name plates
+== Показывать имена
+
+Show only supported
+== Только поддерживаемые
+
+Skins
+== Скины
+
+Sound
+== Звук
+
+Sound volume
+== Громкость
+
+Spectate
+== Наблюдать
+
+Spectators
+== Наблюдатели
+
+Standard gametype
+== Стандартный тип игры
+
+Standard map
+== Стандартная карта
+
+Switch weapon on pickup
+== Переключать оружие при подборе
+
+Team
+== Команда
+
+Team chat
+== Командный чат
+
+Teeworlds %s is out! Download it at www.teeworlds.com!
+== Teeworlds %s Вышел! Скачайте на www.teeworlds.com!
+
+Texture Compression
+== Сжатие текстур
+
+The server is running a non-standard tuning on a pure game type.
+== Сервер работает с нестандартными настройками на стандартном типе игры.
+
+Time limit
+== Лимит
+
+Try again
+== Еще раз
+
+Type
+== Тип
+
+UI Color
+== Цвет интерфейса
+
+Use sounds
+== Включить звуки
+
+V-Sync
+== Вертикальная синхронизация
+
+Version
+== Версия
+
+Vote no
+== "Против"
+
+Vote yes
+== "За"
+
+Voting
+== Голосование
+
+Weapon
+== Оружие
+
+Welcome to Teeworlds
+== Добро пожаловать в Teeworlds
+
+Yes
+== Да
+
+You must restart the game for all settings to take effect.
+== Вам нужно перезапустить игру, чтобы изменения вступили в силу
+
+##### needs translation ####
+
+##### old translations ####
+
