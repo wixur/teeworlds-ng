@@ -1,6 +1,7 @@
 #include <memory.h> // memcmp
 
 #include <engine/e_client_interface.h>
+#include <engine/e_config.h>
 #include <game/generated/g_protocol.hpp>
 #include <game/generated/gc_data.hpp>
 
@@ -37,8 +38,6 @@ void HUD::render_goals()
 	
 	float whole = 300*gfx_screenaspect();
 	float half = whole/2.0f;
-
-
 	gfx_mapscreen(0,0,300*gfx_screenaspect(),300);
 	if(!gameclient.snap.gameobj->sudden_death)
 	{
@@ -56,30 +55,39 @@ void HUD::render_goals()
 
 		str_format(buf, sizeof(buf), "%d:%02d", time /60, time %60);
 		float w = gfx_text_width(0, 16, buf, -1);
-		gfx_text(0, half-w/2, 2, 16, buf, -1);
+        if(config.cl_hud_tdtw_timer == 0)
+        gfx_text(0, half-w/2, 2, 16, buf, -1);
+        else
+		gfx_text(0, whole-w-5, 200, 16, buf, -1);
 	}
 
 	if(gameclient.snap.gameobj->sudden_death)
 	{
 		const char *text = "Sudden Death";
 		float w = gfx_text_width(0, 16, text, -1);
-		gfx_text(0, half-w/2, 2, 16, text, -1);
+        if(config.cl_hud_tdtw_timer == 0)
+        gfx_text(0, half-w/2, 2, 16, text, -1);
+        else
+		gfx_text(0, whole-w-5, 200, 16, text, -1);
 	}
 
 	// render small score hud
-	if(!(gameclient.snap.gameobj && gameclient.snap.gameobj->game_over) && (gameflags&GAMEFLAG_TEAMS))
+	 if(!(gameclient.snap.gameobj && gameclient.snap.gameobj->game_over) && (gameflags&GAMEFLAG_TEAMS))
 	{
 		for(int t = 0; t < 2; t++)
 		{
 			gfx_blend_normal();
 			gfx_texture_set(-1);
 			gfx_quads_begin();
+		  if(config.cl_hud_miniscore_transparent == 0)
+		    {
 			if(t == 0)
-				gfx_setcolor(1,0,0,0.25f);
+			gfx_setcolor(1,0,0,0.25f);
 			else
 				gfx_setcolor(0,0,1,0.25f);
 			draw_round_rect(whole-40, 300-40-15+t*20, 50, 18, 5.0f);
-			gfx_quads_end();
+		    }
+		      gfx_quads_end();
 
 			char buf[32];
 			str_format(buf, sizeof(buf), "%d", t?gameclient.snap.gameobj->teamscore_blue:gameclient.snap.gameobj->teamscore_red);
@@ -117,9 +125,11 @@ void HUD::render_goals()
 					}
 				}
 			}
-			else
-				gfx_text(0, whole-20-w/2, 300-40-15+t*20, 14, buf, -1);
-		}
+            else
+			gfx_text(0, whole-20-w/2, 300-40-15+t*20, 14, buf, -1);    
+     }
+
+
 	}
 
 	// render warmup timer
@@ -161,7 +171,7 @@ void HUD::render_connectionwarning()
 {
 	if(client_connection_problems())
 	{
-		const char *text = "Connection Problems...";
+		const char *text = localize("Connection Problems...");
 		float w = gfx_text_width(0, 24, text, -1);
 		gfx_text(0, 150*gfx_screenaspect()-w/2, 50, 24, text, -1);
 	}
@@ -171,7 +181,7 @@ void HUD::render_teambalancewarning()
 {
 	// render prompt about team-balance
 	bool flash = time_get()/(time_freq()/2)%2 == 0;
-	if (gameclient.snap.gameobj && (gameclient.snap.gameobj->flags&GAMEFLAG_TEAMS) != 0)
+	if (gameclient.snap.gameobj && gameclient.snap.gameobj->flags&GAMEFLAG_TEAMS != 0)
 	{	
 		if (config.cl_warning_teambalance && abs(gameclient.snap.team_size[0]-gameclient.snap.team_size[1]) >= 2)
 		{
@@ -237,50 +247,247 @@ void HUD::render_cursor()
 	gfx_quads_end();
 }
 
+void render_health_std(float &x,float y)
+{
+	gfx_quads_begin();
+	select_sprite(SPRITE_HEALTH_FULL);
+	int h=0;
+	for(; h < gameclient.snap.local_character->health; h++,x+=12)
+		gfx_quads_drawTL(x,y,10,10);
+
+	select_sprite(SPRITE_HEALTH_EMPTY);
+	for(; h < 10; h++,x+=12)
+		gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+}
+
+void render_health_num(float &x,float y)
+{
+	gfx_quads_begin();
+	select_sprite(SPRITE_HEALTH_FULL);
+	gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+	x+=12;
+	char buf[5];
+	str_format(buf, sizeof(buf), "%d", gameclient.snap.local_character->health);
+	if(gameclient.snap.local_character->health<5)
+		gfx_text_color(1.0f,0.0f,0.0f,1.0f);
+	gfx_text(0, x, y-2, 10, buf, -1);
+	if(gameclient.snap.local_character->health<5)
+		gfx_text_color(1,1,1,1);
+	x+=12;
+	gfx_texture_set(data->images[IMAGE_GAME].id);
+}
+
+
+void render_armor_std(float &x,float y)
+{
+	gfx_quads_begin();
+	int h = 0;
+	select_sprite(SPRITE_ARMOR_FULL);
+	for(; h < gameclient.snap.local_character->armor; h++,x+=12)
+		gfx_quads_drawTL(x,y,10,10);
+
+	select_sprite(SPRITE_ARMOR_EMPTY);
+	for(; h < 10; h++,x+=12)
+		gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+}
+
+void render_armor_num(float &x,float y)
+{
+	gfx_quads_begin();
+	select_sprite(SPRITE_ARMOR_FULL);
+	gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+	x+=12;
+	char buf[5];
+	str_format(buf, sizeof(buf), "%d", gameclient.snap.local_character->armor);
+	gfx_text(0, x, y-2, 10, buf, -1);
+	x+=12;
+	gfx_texture_set(data->images[IMAGE_GAME].id);
+}
+
+void render_pistol_std(float &x,float y)
+{
+	gfx_quads_begin();
+	select_sprite(data->weapons.id[1].sprite_proj);
+	for (int i = 0; i < min(gameclient.ammo_count[1], 10); i++,x+=12)
+		gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+}
+
+void render_pistol_num(float &x, float y)
+{
+	gfx_quads_begin();
+	select_sprite(data->weapons.id[1].sprite_proj);
+	gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+	x+=12;
+	char buf[5];
+	str_format(buf, sizeof(buf), "%d", gameclient.ammo_count[1]);
+	gfx_text(0, x, y-2, 10, buf, -1);
+	x+=12;
+	gfx_texture_set(data->images[IMAGE_GAME].id);
+}
+
+
+void render_shotgun_std(float &x,float y)
+{
+	gfx_quads_begin();
+	select_sprite(data->weapons.id[2].sprite_proj);
+	for (int i = 0; i < min(gameclient.ammo_count[2], 10); i++,x+=12)
+		gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+}
+
+void render_shotgun_num(float &x, float y)
+{
+	gfx_quads_begin();
+	select_sprite(data->weapons.id[2].sprite_proj);
+	gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+	x+=12;
+	char buf[5];
+	str_format(buf, sizeof(buf), "%d", gameclient.ammo_count[2]);
+	gfx_text(0, x, y-2, 10, buf, -1);
+	x+=12;
+	gfx_texture_set(data->images[IMAGE_GAME].id);
+}
+
+
+void render_grenade_std(float &x,float y)
+{
+	gfx_quads_begin();
+	select_sprite(data->weapons.id[3].sprite_proj);
+	for (int i = 0; i < min(gameclient.ammo_count[3], 10); i++,x+=12)
+		gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+}
+
+void render_grenade_num(float &x, float y)
+{
+	gfx_quads_begin();
+	select_sprite(data->weapons.id[3].sprite_proj);
+	gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+	x+=12;
+	char buf[5];
+	str_format(buf, sizeof(buf), "%d", gameclient.ammo_count[3]);
+	gfx_text(0, x, y-2, 10, buf, -1);
+	x+=12;
+	gfx_texture_set(data->images[IMAGE_GAME].id);
+}
+
+void render_laser_std(float &x,float y)
+{
+	gfx_quads_begin();
+	select_sprite(data->weapons.id[4].sprite_proj);
+	for (int i = 0; i < min(gameclient.ammo_count[4], 10); i++,x+=12)
+		gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+}
+
+void render_laser_num(float &x, float y)
+{
+	gfx_quads_begin();
+	select_sprite(data->weapons.id[4].sprite_proj);
+	gfx_quads_drawTL(x,y,10,10);
+	gfx_quads_end();
+	x+=12;
+	char buf[5];
+	str_format(buf, sizeof(buf), "%d", gameclient.ammo_count[4]);
+	gfx_text(0, x, y-2, 10, buf, -1);
+	x+=12;
+	gfx_texture_set(data->images[IMAGE_GAME].id);
+}
+
+void render_current_ammo_std(float &x,float y)
+{
+	int w = gameclient.snap.local_character->weapon%NUM_WEAPONS;
+	if(w==1) render_pistol_std(x,y);
+	if(w==2) render_shotgun_std(x,y);
+	if(w==3) render_grenade_std(x,y);
+	if(w==4) render_laser_std(x,y);
+}
+
+void render_current_ammo_num(float &x,float y)
+{
+	int w = gameclient.snap.local_character->weapon%NUM_WEAPONS;
+	if(w==1) render_pistol_num(x,y);
+	if(w==2) render_shotgun_num(x,y);
+	if(w==3) render_grenade_num(x,y);
+	if(w==4) render_laser_num(x,y);
+}
+
+
 void HUD::render_healthandammo()
 {
 	//mapscreen_to_group(gacenter_x, center_y, layers_game_group());
 
 	float x = 5;
 	float y = 5;
-
-	// render ammo count
-	// render gui stuff
-
+	
 	gfx_texture_set(data->images[IMAGE_GAME].id);
 	gfx_mapscreen(0,0,width,300);
 	
-	gfx_quads_begin();
-	
-	// if weaponstage is active, put a "glow" around the stage ammo
-	select_sprite(data->weapons.id[gameclient.snap.local_character->weapon%NUM_WEAPONS].sprite_proj);
-	for (int i = 0; i < min(gameclient.snap.local_character->ammocount, 10); i++)
-		gfx_quads_drawTL(x+i*12,y+24,10,10);
-
-	gfx_quads_end();
-
-	gfx_quads_begin();
-	int h = 0;
-
-	// render health
-	select_sprite(SPRITE_HEALTH_FULL);
-	for(; h < gameclient.snap.local_character->health; h++)
-		gfx_quads_drawTL(x+h*12,y,10,10);
-
-	select_sprite(SPRITE_HEALTH_EMPTY);
-	for(; h < 10; h++)
-		gfx_quads_drawTL(x+h*12,y,10,10);
-
-	// render armor meter
-	h = 0;
-	select_sprite(SPRITE_ARMOR_FULL);
-	for(; h < gameclient.snap.local_character->armor; h++)
-		gfx_quads_drawTL(x+h*12,y+12,10,10);
-
-	select_sprite(SPRITE_ARMOR_EMPTY);
-	for(; h < 10; h++)
-		gfx_quads_drawTL(x+h*12,y+12,10,10);
-	gfx_quads_end();
+	char *s = config.cl_hud_view;
+	while(*s!=0)
+	{
+		switch(*s)
+		{
+		case 'P':
+			render_pistol_num(x,y);
+			break;
+		case 'S':
+			render_shotgun_num(x,y);
+			break;
+		case 'G':
+			render_grenade_num(x,y);
+			break;
+		case 'L':
+			render_laser_num(x,y);
+			break;
+		case 'p':
+			render_pistol_std(x,y);
+			break;
+		case 's':
+			render_shotgun_std(x,y);
+			break;
+		case 'g':
+			render_grenade_std(x,y);
+			break;
+		case 'l':
+			render_laser_std(x,y);
+			break;
+		case 'a':
+			render_armor_std(x,y);
+			break;
+		case 'h':
+			render_health_std(x,y);
+			break;
+		case 'A':
+			render_armor_num(x,y);
+			break;
+		case 'H':
+			render_health_num(x,y);
+			break;
+		case 'c':
+			render_current_ammo_std(x,y);
+			break;
+		case 'C':
+			render_current_ammo_num(x,y);
+			break;
+		case 'n':
+			y+=12;
+			x=5;
+			break;
+		case ' ':
+			x+=12;
+			break;
+	    }
+	    s++;
+	}
 }
 
 void HUD::on_render()

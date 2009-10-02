@@ -93,6 +93,7 @@ public:
 	};
 
 	SNAPSTATE snap;
+    int ammo_count[NUM_WEAPONS];
 	
 	// client data
 	struct CLIENT_DATA

@@ -860,6 +860,7 @@ void GAMECLIENT::on_snapshot()
 			snap.local_character = &c->cur;
 			snap.local_prev_character = &c->prev;
 			local_character_pos = vec2(snap.local_character->x, snap.local_character->y);
+            ammo_count[snap.local_character->weapon]=snap.local_character->ammocount;
 		}
 	}
 	else

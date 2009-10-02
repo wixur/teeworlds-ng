@@ -57,6 +57,11 @@ MACRO_CONFIG_INT(cl_show_ghost, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Show late
 MACRO_CONFIG_INT(gfx_custom_hud_colors, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Custom hud colors")
 MACRO_CONFIG_INT(cl_new_scoreboard, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Use new scoreboard")
 
+MACRO_CONFIG_INT(cl_hud_miniscore_transparent, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Transparent miniscore")
+MACRO_CONFIG_STR(cl_hud_view, 128, "hnanc", CFGFLAG_CLIENT|CFGFLAG_SAVE, "Hud view")
+MACRO_CONFIG_INT(cl_hud_tdtw_timer, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Timer as in tdtw")
+
+
 MACRO_CONFIG_INT(gfx_red_hud_color_r, 255, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
 MACRO_CONFIG_INT(gfx_red_hud_color_g, 127, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
 MACRO_CONFIG_INT(gfx_red_hud_color_b, 127, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
