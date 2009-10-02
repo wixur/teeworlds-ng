@@ -261,12 +261,15 @@ void render_health_std(float &x,float y)
 	gfx_quads_end();
 }
 
-void render_health_num(float &x,float y)
+void render_health_num(float &x,float y, int z)
 {
+    if(z)
+    {
 	gfx_quads_begin();
 	select_sprite(SPRITE_HEALTH_FULL);
 	gfx_quads_drawTL(x,y,10,10);
 	gfx_quads_end();
+    }
 	x+=12;
 	char buf[5];
 	str_format(buf, sizeof(buf), "%d", gameclient.snap.local_character->health);
@@ -294,12 +297,15 @@ void render_armor_std(float &x,float y)
 	gfx_quads_end();
 }
 
-void render_armor_num(float &x,float y)
+void render_armor_num(float &x,float y, int z)
 {
+    if(z)
+    {
 	gfx_quads_begin();
 	select_sprite(SPRITE_ARMOR_FULL);
 	gfx_quads_drawTL(x,y,10,10);
 	gfx_quads_end();
+    }
 	x+=12;
 	char buf[5];
 	str_format(buf, sizeof(buf), "%d", gameclient.snap.local_character->armor);
@@ -317,12 +323,15 @@ void render_pistol_std(float &x,float y)
 	gfx_quads_end();
 }
 
-void render_pistol_num(float &x, float y)
+void render_pistol_num(float &x, float y, int z)
 {
+    if(z)
+    {
 	gfx_quads_begin();
 	select_sprite(data->weapons.id[1].sprite_proj);
 	gfx_quads_drawTL(x,y,10,10);
 	gfx_quads_end();
+    }
 	x+=12;
 	char buf[5];
 	str_format(buf, sizeof(buf), "%d", gameclient.ammo_count[1]);
@@ -341,12 +350,15 @@ void render_shotgun_std(float &x,float y)
 	gfx_quads_end();
 }
 
-void render_shotgun_num(float &x, float y)
+void render_shotgun_num(float &x, float y, int z)
 {
+    if(z)
+    {
 	gfx_quads_begin();
 	select_sprite(data->weapons.id[2].sprite_proj);
 	gfx_quads_drawTL(x,y,10,10);
 	gfx_quads_end();
+    }
 	x+=12;
 	char buf[5];
 	str_format(buf, sizeof(buf), "%d", gameclient.ammo_count[2]);
@@ -365,12 +377,15 @@ void render_grenade_std(float &x,float y)
 	gfx_quads_end();
 }
 
-void render_grenade_num(float &x, float y)
+void render_grenade_num(float &x, float y, int z)
 {
+    if(z)
+    {
 	gfx_quads_begin();
 	select_sprite(data->weapons.id[3].sprite_proj);
 	gfx_quads_drawTL(x,y,10,10);
 	gfx_quads_end();
+    }
 	x+=12;
 	char buf[5];
 	str_format(buf, sizeof(buf), "%d", gameclient.ammo_count[3]);
@@ -388,12 +403,15 @@ void render_laser_std(float &x,float y)
 	gfx_quads_end();
 }
 
-void render_laser_num(float &x, float y)
+void render_laser_num(float &x, float y, int z)
 {
+    if(z)
+    {
 	gfx_quads_begin();
 	select_sprite(data->weapons.id[4].sprite_proj);
 	gfx_quads_drawTL(x,y,10,10);
 	gfx_quads_end();
+    }
 	x+=12;
 	char buf[5];
 	str_format(buf, sizeof(buf), "%d", gameclient.ammo_count[4]);
@@ -411,22 +429,37 @@ void render_current_ammo_std(float &x,float y)
 	if(w==4) render_laser_std(x,y);
 }
 
-void render_current_ammo_num(float &x,float y)
+void render_current_ammo_num(float &x,float y,int z)
 {
 	int w = gameclient.snap.local_character->weapon%NUM_WEAPONS;
-	if(w==1) render_pistol_num(x,y);
-	if(w==2) render_shotgun_num(x,y);
-	if(w==3) render_grenade_num(x,y);
-	if(w==4) render_laser_num(x,y);
+	if(w==1) render_pistol_num(x,y,z);
+	if(w==2) render_shotgun_num(x,y,z);
+	if(w==3) render_grenade_num(x,y,z);
+	if(w==4) render_laser_num(x,y,z);
 }
 
 
 void HUD::render_healthandammo()
 {
 	//mapscreen_to_group(gacenter_x, center_y, layers_game_group());
+    if (config.cl_hud_center == 1)
+    {
+    float x = 160;
+	gfx_texture_set(data->images[IMAGE_GAME].id);
+	gfx_mapscreen(0,0,width,300);
+    char slash[10];
+    render_health_num(x,125,0);
+    x += 0;
+    render_armor_num(x,125,0);
+    x += 0;
+    render_current_ammo_num(x,125,0);
+    }
 
+if(config.cl_hud_center != 1)
+{
 	float x = 5;
 	float y = 5;
+    int z = 1;
 	
 	gfx_texture_set(data->images[IMAGE_GAME].id);
 	gfx_mapscreen(0,0,width,300);
@@ -437,16 +470,16 @@ void HUD::render_healthandammo()
 		switch(*s)
 		{
 		case 'P':
-			render_pistol_num(x,y);
+			render_pistol_num(x,y,z);
 			break;
 		case 'S':
-			render_shotgun_num(x,y);
+			render_shotgun_num(x,y,z);
 			break;
 		case 'G':
-			render_grenade_num(x,y);
+			render_grenade_num(x,y,z);
 			break;
 		case 'L':
-			render_laser_num(x,y);
+			render_laser_num(x,y,z);
 			break;
 		case 'p':
 			render_pistol_std(x,y);
@@ -467,16 +500,16 @@ void HUD::render_healthandammo()
 			render_health_std(x,y);
 			break;
 		case 'A':
-			render_armor_num(x,y);
+			render_armor_num(x,y,z);
 			break;
 		case 'H':
-			render_health_num(x,y);
+			render_health_num(x,y,z);
 			break;
 		case 'c':
 			render_current_ammo_std(x,y);
 			break;
 		case 'C':
-			render_current_ammo_num(x,y);
+			render_current_ammo_num(x,y,z);
 			break;
 		case 'n':
 			y+=12;
@@ -487,7 +520,8 @@ void HUD::render_healthandammo()
 			break;
 	    }
 	    s++;
-	}
+    }
+}
 }
 
 void HUD::on_render()

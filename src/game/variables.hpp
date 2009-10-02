@@ -78,6 +78,8 @@ MACRO_CONFIG_INT(gfx_spectator_hud_color_r, 192, 0, 255, CFGFLAG_CLIENT|CFGFLAG_
 MACRO_CONFIG_INT(gfx_spectator_hud_color_g, 192, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
 MACRO_CONFIG_INT(gfx_spectator_hud_color_b, 192, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
 
+MACRO_CONFIG_INT(cl_hud_center, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
+
 /* server */
 MACRO_CONFIG_INT(sv_warmup, 0, 0, 0, CFGFLAG_SERVER, "Number of seconds to do warpup before round starts")
 MACRO_CONFIG_STR(sv_motd, 900, "", CFGFLAG_SERVER, "Message of the day to display for the clients")
