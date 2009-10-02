@@ -49,6 +49,8 @@ class CONSOLE : public COMPONENT
 	float state_change_end;
 	float state_change_duration;
 
+	int page;
+
 
 	void toggle(int type);
 
