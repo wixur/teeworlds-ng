@@ -173,7 +173,8 @@ class MENUS : public COMPONENT
 	void render_settings_graphics(RECT main_view);
 	void render_settings_sound(RECT main_view);
 	void render_settings(RECT main_view);
-	
+	void render_settings_teeng(RECT main_view);
+
 	void set_active(bool active);
 public:
 	static MENUS_KEYBINDER binder;

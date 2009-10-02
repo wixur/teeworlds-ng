@@ -614,7 +614,6 @@ void MENUS::render_news(RECT main_view)
 {
 	ui_draw_rect(&main_view, color_tabbar_active, CORNER_ALL, 10.0f);
 }
-
 void MENUS::on_init()
 {
 
@@ -746,6 +745,8 @@ int MENUS::render()
 			render_serverbrowser(main_view);
 		else if(config.ui_page == PAGE_SETTINGS)
 			render_settings(main_view);
+//		else if(config.ui_page == PAGE_TEE-NG)
+//			renger_settings(main_teeng);
 	}
 	else
 	{

@@ -42,7 +42,67 @@ bool MENUS_KEYBINDER::on_input(INPUT_EVENT e)
 	
 	return false;
 }
+void MENUS::render_settings_teeng(RECT main_view)
+{
+RECT button;
+RECT lasersplit;
+RECT label;
+ui_vsplit_l(&main_view, 280.0f,&main_view, &lasersplit);
+ui_vsplit_l(&main_view, 60.0f,&label,&main_view);
+ui_hsplit_t(&main_view, 20.0f, &button, &main_view);
+	{
+		char buf[128];
+		str_format(buf, sizeof(buf), "%s:", localize("Laser color (outline)"));
+		ui_do_label(&label, buf, 14.0, -1);
+		ui_hsplit_t(&main_view,20.0f,&label,&main_view);
+		ui_vsplit_l(&main_view, -70.0f,&label,&label);
+		ui_do_label(&label, localize("Red"), 14.0, -1);
+		ui_hsplit_t(&main_view, 20.0f,&button,&main_view);
+		ui_hmargin(&button, 2.0f, &button);
+		config.cl_laser_color_red_outline = (int)(ui_do_scrollbar_h(&config.cl_laser_color_red_outline, &button, (config.cl_laser_color_red_outline-5)/1000.0f)*1000.0f)+5;
 
+		ui_vsplit_l(&main_view, -70.0f,&label,&label);
+		ui_do_label(&label, localize("Green"), 14.0, -1);
+		ui_hsplit_t(&main_view, 20.0f,&button,&main_view);
+		ui_hmargin(&button, 2.0f, &button);
+		config.cl_laser_color_green_outline = (int)(ui_do_scrollbar_h(&config.cl_laser_color_green_outline, &button, (config.cl_laser_color_green_outline-5)/1000.0f)*1000.0f)+5;
+
+		ui_vsplit_l(&main_view, -70.0f,&label,&label);
+		ui_do_label(&label, localize("Blue"), 14.0, -1);
+		ui_hsplit_t(&main_view, 20.0f,&button,&main_view);
+		ui_hmargin(&button, 2.0f, &button);
+		config.cl_laser_color_blue_outline = (int)(ui_do_scrollbar_h(&config.cl_laser_color_blue_outline, &button, (config.cl_laser_color_blue_outline-5)/1000.0f)*1000.0f)+5;
+	}
+	{
+		ui_vsplit_l(&lasersplit,110.0f,&main_view,&lasersplit);
+		char buf[128];
+		ui_hsplit_t(&lasersplit,20.0f,&label,&main_view);
+		ui_vsplit_l(&lasersplit, -60.0f,&label,&label);
+		ui_do_label(&label, localize("Laser color (inline)"), 14.0, -1);
+
+		ui_hsplit_t(&lasersplit,40.0f,&main_view,&lasersplit);
+		ui_hsplit_t(&lasersplit,20.0f,&label,&main_view);
+		ui_vsplit_l(&lasersplit, -70.0f,&label,&label);
+		ui_do_label(&label, localize("Red"), 14.0, -1);
+		ui_hsplit_t(&lasersplit, 20.0f,&button,&main_view);
+		ui_hmargin(&button, 2.0f, &button);
+		config.cl_laser_color_red_inline = (int)(ui_do_scrollbar_h(&config.cl_laser_color_red_inline, &button, (config.cl_laser_color_red_inline-5)/1000.0f)*1000.0f)+5;
+
+		ui_vsplit_l(&main_view, -70.0f,&label,&label);
+		ui_do_label(&label, localize("Green"), 14.0, -1);
+		ui_hsplit_t(&main_view, 20.0f,&button,&main_view);
+		ui_hmargin(&button, 2.0f, &button);
+		config.cl_laser_color_green_inline = (int)(ui_do_scrollbar_h(&config.cl_laser_color_green_inline, &button, (config.cl_laser_color_green_inline-5)/1000.0f)*1000.0f)+5;
+
+		ui_vsplit_l(&main_view, -70.0f,&label,&label);
+		ui_do_label(&label, localize("Blue"), 14.0, -1);
+		ui_hsplit_t(&main_view, 20.0f,&button,&main_view);
+		ui_hmargin(&button, 2.0f, &button);
+		config.cl_laser_color_blue_inline = (int)(ui_do_scrollbar_h(&config.cl_laser_color_blue_inline, &button, (config.cl_laser_color_blue_inline-5)/1000.0f)*1000.0f)+5;
+	}
+
+
+}
 void MENUS::render_settings_player(RECT main_view)
 {
 	RECT button;
@@ -720,7 +780,8 @@ void MENUS::render_settings(RECT main_view)
 		localize("Player"),
 		localize("Controls"),
 		localize("Graphics"),
-		localize("Sound")};
+		localize("Sound"),
+		"Tee-ng"};
 	int num_tabs = (int)(sizeof(tabs)/sizeof(*tabs));
 
 	for(int i = 0; i < num_tabs; i++)
@@ -743,6 +804,8 @@ void MENUS::render_settings(RECT main_view)
 		render_settings_graphics(main_view);
 	else if(settings_page == 4)
 		render_settings_sound(main_view);
+	else if(settings_page == 5)
+		render_settings_teeng(main_view);
 
 	if(need_restart)
 	{

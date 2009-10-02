@@ -169,7 +169,11 @@ void ITEMS::render_laser(const struct NETOBJ_LASER *current)
 	//vec4 outer_color(0.65f,0.85f,1.0f,1.0f);
 
 	// do outline
-	vec4 outer_color(0.075f,0.075f,0.25f,1.0f);
+	float r_o = config.cl_laser_color_red_outline / 1000.0f;
+	float g_o = config.cl_laser_color_green_outline / 1000.0f;
+	float b_o = config.cl_laser_color_blue_outline / 1000.0f;
+//	vec4 outer_color(0.075f,0.075f,0.25f,1.0f);
+	vec4 outer_color(r_o,g_o,b_o,1.0f);
 	gfx_setcolor(outer_color.r,outer_color.g,outer_color.b,1.0f);
 	out = vec2(dir.y, -dir.x) * (7.0f*ia);
 
@@ -181,7 +185,11 @@ void ITEMS::render_laser(const struct NETOBJ_LASER *current)
 		);
 
 	// do inner	
-	vec4 inner_color(0.5f,0.5f,1.0f,1.0f);
+	float r_i = config.cl_laser_color_red_inline / 1000.0f;
+	float g_i = config.cl_laser_color_green_inline / 1000.0f;
+	float b_i = config.cl_laser_color_blue_inline / 1000.0f;
+//	vec4 inner_color(0.5f,0.5f,1.0f,1.0f);
+	vec4 inner_color(r_i,g_i,b_i,1.0f);
 	out = vec2(dir.y, -dir.x) * (5.0f*ia);
 	gfx_setcolor(inner_color.r, inner_color.g, inner_color.b, 1.0f); // center
 	

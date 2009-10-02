@@ -427,6 +427,20 @@ Yes
 You must restart the game for all settings to take effect.
 == Вам нужно перезапустить игру, чтобы изменения вступили в силу
 
+Laser color (outline)
+== Цвет лазера (контур)
+
+Laser color (inline)
+== Цвет лазера (внутр.)
+
+Red
+== Красный
+
+Green
+== Зеленый
+
+Blue
+== Синий
 ##### needs translation ####
 
 ##### old translations ####
