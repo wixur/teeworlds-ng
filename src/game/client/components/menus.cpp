@@ -853,7 +853,7 @@ int MENUS::render()
 		}
 		else if(popup == POPUP_PASSWORD)
 		{
-			RECT label, textbox, tryagain, abort, box;
+			RECT label, textbox, tryagain, abort;
 			
 			ui_hsplit_b(&box, 20.f, &box, &part);
 			ui_hsplit_b(&box, 24.f, &box, &part);
