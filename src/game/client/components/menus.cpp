@@ -779,6 +779,7 @@ int MENUS::render()
 		}
 		else if(popup == POPUP_DISCONNECTED)
 		{
+
 			title = localize("Disconnected");
 			extra_text = client_error_string();
 			button_text = localize("Ok");
@@ -852,7 +853,7 @@ int MENUS::render()
 		}
 		else if(popup == POPUP_PASSWORD)
 		{
-			RECT label, textbox, tryagain, abort;
+			RECT label, textbox, tryagain, abort, box;
 			
 			ui_hsplit_b(&box, 20.f, &box, &part);
 			ui_hsplit_b(&box, 24.f, &box, &part);
@@ -865,7 +866,12 @@ int MENUS::render()
 			
 			static int button_abort = 0;
 			if(ui_do_button(&button_abort, localize("Abort"), 0, &abort, ui_draw_menu_button, 0) || escape_pressed)
+			{
+				if(config.cl_autoconnect)
+				config.cl_autoconnect == 0;
+				else
 				popup = POPUP_NONE;
+			}
 
 			static int button_tryagain = 0;
 			if(ui_do_button(&button_tryagain, localize("Try again"), 0, &tryagain, ui_draw_menu_button, 0) || enter_pressed)

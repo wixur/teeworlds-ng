@@ -1559,6 +1559,9 @@ static void client_update()
 	/* STRESS TEST: join the server again */
 	if(config.dbg_stress)
 	{
+		if(config.cl_autoconnect = 1)
+		config.cl_autoconnect = 0;
+
 		static int64 action_taken = 0;
 		int64 now = time_get();
 		if(client_state() == CLIENTSTATE_OFFLINE)
@@ -1572,13 +1575,34 @@ static void client_update()
 		}
 		else
 		{
-			/*if(now > action_taken+time_freq()*(10+config.dbg_stress))
-			{
-				dbg_msg("stress", "disconnecting!");
-				client_disconnect();
-				action_taken = now;
-			}*/
+
 		}
+		
+	}
+
+	else if(config.cl_autoconnect)
+	{
+		static int64 action_taken = 0;
+		int64 now = time_get();
+		if(client_state() == CLIENTSTATE_OFFLINE)
+		{
+			if(now > action_taken+time_freq()*2)
+			{
+				dbg_msg("client", "reconnecting!");
+				client_connect(config.ui_server_address);
+				action_taken = now;
+			}
+
+		}
+		if(netclient_state(net) == NETSTATE_ONLINE)
+		{
+		config.cl_autoconnect = 0;
+		}
+		else
+		{
+
+		}
+
 	}
 	
 	/* pump the network */

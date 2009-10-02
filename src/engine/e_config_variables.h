@@ -12,6 +12,8 @@ MACRO_CONFIG_STR(logfile, 128, "", CFGFLAG_SAVE|CFGFLAG_CLIENT, "Filename to log
 MACRO_CONFIG_INT(cl_cpu_throttle, 0, 0, 1, CFGFLAG_SAVE|CFGFLAG_CLIENT, "")
 MACRO_CONFIG_INT(cl_editor, 0, 0, 1, CFGFLAG_CLIENT, "")
 
+
+
 MACRO_CONFIG_INT(cl_eventthread, 0, 0, 1, CFGFLAG_CLIENT, "Enables the usage of a thread to pump the events")
 
 MACRO_CONFIG_INT(inp_grab, 0, 0, 1, CFGFLAG_CLIENT, "Use forceful input grabbing method")
@@ -75,3 +77,4 @@ MACRO_CONFIG_INT(dbg_graphs, 0, 0, 1, CFGFLAG_CLIENT, "Performance graphs")
 MACRO_CONFIG_INT(dbg_hitch, 0, 0, 0, CFGFLAG_SERVER, "Hitch warnings")
 MACRO_CONFIG_STR(dbg_stress_server, 32, "localhost", CFGFLAG_CLIENT, "Server to stress")
 MACRO_CONFIG_INT(dbg_resizable, 0, 0, 0, CFGFLAG_CLIENT, "Enables window resizing")
+MACRO_CONFIG_INT(cl_autoconnect, 0, 0, 1, CFGFLAG_CLIENT, "autoconnect")

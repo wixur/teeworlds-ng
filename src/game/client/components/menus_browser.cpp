@@ -390,6 +390,9 @@ void MENUS::render_serverbrowser_filters(RECT view)
 		config.b_filter_ping = atoi(buf);
 		
 		ui_do_label(&button, localize("Maximum ping"), 14.0f, -1);
+	ui_hsplit_t(&view, 20.0f, &button, &view);
+	if (ui_do_button(&config.cl_autoconnect, localize("Autoconnect to server"), config.cl_autoconnect, &button, ui_draw_checkbox, 0))
+		config.cl_autoconnect ^= 1;
 	}
 	
 	ui_hsplit_b(&view, button_height, &view, &button);
