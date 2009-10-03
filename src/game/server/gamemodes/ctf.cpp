@@ -1,5 +1,6 @@
 /* copyright (c) 2007 magnus auvinen, see licence.txt for more info */
 #include <engine/e_server_interface.h>
+#include <engine/e_config.h>
 #include <game/mapitems.hpp>
 #include <game/server/entities/character.hpp>
 #include <game/server/player.hpp>
@@ -10,7 +11,10 @@ GAMECONTROLLER_CTF::GAMECONTROLLER_CTF()
 {
 	flags[0] = 0;
 	flags[1] = 0;
-	gametype = "CTF";
+    if(config.sv_gametype_mod)
+	gametype = "mCTF";
+    else
+    gametype = "CTF";
 	game_flags = GAMEFLAG_TEAMS|GAMEFLAG_FLAGS;
 }
 

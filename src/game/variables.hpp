@@ -101,6 +101,9 @@ MACRO_CONFIG_INT(sv_vote_kick_bantime, 5, 0, 1440, CFGFLAG_SERVER, "The time to 
 MACRO_CONFIG_INT(sv_vote_scorelimit, 0, 0, 1, CFGFLAG_SERVER, "Allow voting to change score limit")
 MACRO_CONFIG_INT(sv_vote_timelimit, 0, 0, 1, CFGFLAG_SERVER, "Allow voting to change time limit")
 
+/* Teeworlds Next generation */
+MACRO_CONFIG_INT(sv_gametype_mod, 0, 0, 1, CFGFLAG_SERVER, "Allow use tune, add prefix \"m\" to standart gametypes")
+
 /* debug */
 #ifdef CONF_DEBUG /* this one can crash the server if not used correctly */
 	MACRO_CONFIG_INT(dbg_dummies, 0, 0, 15, CFGFLAG_SERVER, "")
