@@ -406,10 +406,10 @@ void PLAYERS::render_player(
 	{
 		vec2 ghost_position = mix(vec2(prev_char->x, prev_char->y), vec2(player_char->x, player_char->y), client_intratick());
 		TEE_RENDER_INFO ghost = ghost;
-		int skin = gameclient.skins->find("default");
+		int skin = gameclient.skins->find("x_ghost");
 		ghost.texture = gameclient.skins->get(skin)->org_texture;
 		ghost.size = 64.0f;
-		ghost.color_body = vec4(0.7f,0.0f,0.25f,0.0f);
+		ghost.color_body = vec4(1.0f,1.0f,1.0f,1.0f);
 		ghost.color_feet = vec4(1,1,1,0);
 		render_tee(&state, &ghost, player.emote, direction, ghost_position); // render ghost
 	}
