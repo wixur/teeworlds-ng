@@ -75,7 +75,6 @@ ui_hsplit_t(&main_view, 20.0f, &button, &main_view);
 	}
 	{
 		ui_vsplit_l(&lasersplit,110.0f,&main_view,&lasersplit);
-		char buf[128];
 		ui_hsplit_t(&lasersplit,20.0f,&label,&main_view);
 		ui_vsplit_l(&lasersplit, -60.0f,&label,&label);
 		ui_do_label(&label, localize("Laser color (inline)"), 14.0, -1);

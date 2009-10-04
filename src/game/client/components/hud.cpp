@@ -447,7 +447,6 @@ void HUD::render_healthandammo()
     float x = 160;
 	gfx_texture_set(data->images[IMAGE_GAME].id);
 	gfx_mapscreen(0,0,width,300);
-    char slash[10];
     render_health_num(x,125,0);
     x += 0;
     render_armor_num(x,125,0);

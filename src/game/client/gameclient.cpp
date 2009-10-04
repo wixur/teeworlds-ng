@@ -456,7 +456,6 @@ void GAMECLIENT::on_render()
 	{
 		static bool old_game_over;
 		static bool restarted_game_record = false;
-		static int autorecord_start_time = 0;
 /*		if (client_tick() > tick_to_screenshot && tick_to_screenshot >= 0 && client_state() != CLIENTSTATE_DEMOPLAYBACK)
 		{
 			gfx_screenshot();
