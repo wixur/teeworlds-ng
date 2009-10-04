@@ -69,7 +69,7 @@ void PICKUP::tick()
 		case POWERUP_WEAPON:
 			if(subtype >= 0 && subtype < NUM_WEAPONS)
 			{
-				if(chr->weapons[subtype].ammo < data->weapons.id[subtype].maxammo || !chr->weapons[subtype].got)
+				if((chr->weapons[subtype].ammo < data->weapons.id[subtype].maxammo || !chr->weapons[subtype].got) && (chr->weapons[subtype].ammo != -1 ))
 				{
 					chr->weapons[subtype].got = true;
 					chr->weapons[subtype].ammo = min(data->weapons.id[subtype].maxammo, chr->weapons[subtype].ammo + 10);
