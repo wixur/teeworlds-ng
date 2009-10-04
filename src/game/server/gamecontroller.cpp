@@ -327,12 +327,73 @@ void GAMECONTROLLER::on_character_spawn(class CHARACTER *chr)
 {
 	// default health
 	chr->health = 10;
-	
+       if( strcmp(game.controller->gametype, "DM")==0 || 
+        strcmp(game.controller->gametype, "TDM")==0 || 
+        strcmp(game.controller->gametype, "CTF")==0 )
+    {
 	// give default weapons
 	chr->weapons[WEAPON_HAMMER].got = 1;
 	chr->weapons[WEAPON_HAMMER].ammo = -1;
 	chr->weapons[WEAPON_GUN].got = 1;
 	chr->weapons[WEAPON_GUN].ammo = 10;
+    }
+    if (config.sv_gametype_mod)
+    {
+	char *s = config.sv_items_weapons_start;
+        while(*s != 0)
+        {
+            switch(*s)
+            {
+                case 'H':
+                config.sv_items_weapons_active = 0;
+	            chr->weapons[WEAPON_HAMMER].got = 1;
+            	chr->weapons[WEAPON_HAMMER].ammo = -1;
+                break;
+                case 'P':
+                config.sv_items_weapons_active = 1;
+	            chr->weapons[WEAPON_GUN].got = 1;
+            	chr->weapons[WEAPON_GUN].ammo = 10;
+                break;
+                case 'S':
+                config.sv_items_weapons_active = 2;
+	            chr->weapons[WEAPON_SHOTGUN].got = 1;
+            	chr->weapons[WEAPON_SHOTGUN].ammo = 10;
+                break;
+                case 'G':
+                config.sv_items_weapons_active = 3;
+	            chr->weapons[WEAPON_GRENADE].got = 1;
+            	chr->weapons[WEAPON_GRENADE].ammo = 10;
+                break;
+                case 'L':
+                config.sv_items_weapons_active = 4;
+	            chr->weapons[WEAPON_RIFLE].got = 1;
+            	chr->weapons[WEAPON_RIFLE].ammo = 10;
+                break;
+                case 'p':
+                config.sv_items_weapons_active = 1;
+	            chr->weapons[WEAPON_GUN].got = 1;
+            	chr->weapons[WEAPON_GUN].ammo = -1;
+                break;
+                case 's':
+                config.sv_items_weapons_active = 2;
+	            chr->weapons[WEAPON_SHOTGUN].got = 1;
+            	chr->weapons[WEAPON_SHOTGUN].ammo = -1;
+                break;
+                case 'g':
+                config.sv_items_weapons_active = 3;
+	            chr->weapons[WEAPON_GRENADE].got = 1;
+            	chr->weapons[WEAPON_GRENADE].ammo = -1;
+                break;
+                case 'l':
+                config.sv_items_weapons_active = 4;
+	            chr->weapons[WEAPON_RIFLE].got = 1;
+            	chr->weapons[WEAPON_RIFLE].ammo = -1;
+                break;
+
+            }
+            s++;
+        }
+    }
 }
 
 void GAMECONTROLLER::do_warmup(int seconds)

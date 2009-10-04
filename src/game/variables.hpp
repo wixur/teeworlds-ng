@@ -103,6 +103,10 @@ MACRO_CONFIG_INT(sv_vote_timelimit, 0, 0, 1, CFGFLAG_SERVER, "Allow voting to ch
 
 /* Teeworlds Next generation */
 MACRO_CONFIG_INT(sv_gametype_mod, 0, 0, 1, CFGFLAG_SERVER, "Allow use tune, add prefix \"m\" to standart gametypes")
+MACRO_CONFIG_STR(sv_items_weapons_start, 10, "HP", CFGFLAG_SERVER, "Spawn weapons")
+MACRO_CONFIG_INT(sv_items_weapons_active, 1, 0, 4, CFGFLAG_SERVER, "Start weapon")
+MACRO_CONFIG_INT(sv_items_weapons_last, 0, 0, 4, CFGFLAG_SERVER, "Last weapon")
+MACRO_CONFIG_INT(sv_items_weapons_queued, -1, 0, 4, CFGFLAG_SERVER, "Que to weapon")
 
 /* debug */
 #ifdef CONF_DEBUG /* this one can crash the server if not used correctly */

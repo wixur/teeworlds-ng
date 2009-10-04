@@ -52,8 +52,17 @@ bool CHARACTER::spawn(PLAYER *player, vec2 pos, int team)
 	player_state = PLAYERSTATE_UNKNOWN;
 	emote_stop = -1;
 	last_action = -1;
-	active_weapon = WEAPON_GUN;
-	last_weapon = WEAPON_HAMMER;
+    if(config.sv_gametype_mod)
+    {
+	active_weapon = config.sv_items_weapons_active;
+	last_weapon = config.sv_items_weapons_last;
+    }
+    else
+    {
+        active_weapon = WEAPON_GUN;
+        last_weapon = WEAPON_HAMMER;
+    }
+    
 	queued_weapon = -1;
 	
 	//clear();
