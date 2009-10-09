@@ -98,6 +98,7 @@ void HUD::render_goals()
 				gfx_text(0, whole-20-w/2+5, 300-40-15+t*20, 14, buf, -1);
 				if(gameclient.snap.flags[t])
 				{
+					int id = gameclient.snap.flags[t]->carried_by%MAX_CLIENTS;
 					if(gameclient.snap.flags[t]->carried_by == -2 || (gameclient.snap.flags[t]->carried_by == -1 && ((client_tick()/10)&1)))
 					{
 						gfx_blend_normal();
@@ -113,7 +114,6 @@ void HUD::render_goals()
 					}
 					else if(gameclient.snap.flags[t]->carried_by >= 0)
 					{
-						int id = gameclient.snap.flags[t]->carried_by%MAX_CLIENTS;
 						const char *name = gameclient.clients[id].name;
 						float w = gfx_text_width(0, 10, name, -1);
 						gfx_text(0, whole-40-5-w, 300-40-15+t*20+2, 10, name, -1);
@@ -122,6 +122,71 @@ void HUD::render_goals()
 						
 						render_tee(ANIMSTATE::get_idle(), &info, EMOTE_NORMAL, vec2(1,0),
 							vec2(whole-40+10, 300-40-15+9+t*20+1));
+					}
+					if(config.cl_flagdirection && (gameclient.snap.local_cid != id))
+					{
+						static const float radius = 30.0f;
+						static const float distmult = 50.0f;
+						static const float flagsize = 16;
+
+						vec2 flagpos = vec2(gameclient.snap.flags[t]->x, gameclient.snap.flags[t]->y);
+						vec2 pos;
+						vec2 playerpos;
+						if (gameclient.snap.spectate)
+							playerpos = gameclient.controls->mouse_pos;
+						else
+							playerpos = gameclient.local_character_pos;
+						pos = flagpos-playerpos;
+						vec2 scrn = pos/length(pos);
+
+						vec2 fstcircle = scrn*radius;
+						vec2 sndcircle = scrn*(radius+10);
+						vec2 thdcircle = scrn*(radius+20);
+
+						gfx_blend_normal();
+						gfx_texture_set(data->images[IMAGE_GAME].id);
+
+						gfx_quads_begin();
+						if (t == 0)
+							select_sprite(SPRITE_FLAG_RED);
+						else
+							select_sprite(SPRITE_FLAG_BLUE);
+						gfx_quads_drawTL(half+fstcircle.x-flagsize/4, 150+fstcircle.y-flagsize/2, flagsize/2, flagsize);
+						gfx_quads_end();
+
+						gfx_texture_set(-1);
+
+						gfx_lines_begin();
+
+						int intk = client_tick()/10&15;
+
+						if (id == -2)
+							gfx_setcolor(0.95f, 0.95f, 0.95f, 0.85f);
+						else if (id == -1)
+						{
+							if (intk <= 8)
+								gfx_setcolor(0.06f*intk, 0.06f*intk, 0.06f*intk, 0.85f);
+							else
+								gfx_setcolor(0.06f*(intk-8), 0.06f*(intk-8), 0.06f*(intk-8), 0.85f);
+						}
+						else if (id >= 0)
+						{
+							if (gameclient.clients[id].team == gameclient.clients[gameclient.snap.local_cid].team)
+								gfx_setcolor(0.15f, 0.95f, 0.15f, 0.85f);
+							else
+								gfx_setcolor(0.95f, 0.15f, 0.15f, 0.85f);
+						}
+
+						gfx_lines_draw(half+sndcircle.x, 150+sndcircle.y, half+thdcircle.x, 150+thdcircle.y);
+
+						gfx_lines_end();
+
+						{
+							char buf[32];
+							str_format(buf, sizeof(buf), "%d", round(distance(flagpos, playerpos)/distmult));
+							float w = gfx_text_width(0, 5, buf, -1);
+							gfx_text(0, half+fstcircle.x-w/2, 150+fstcircle.y, 5, buf, -1);
+						}
 					}
 				}
 			}

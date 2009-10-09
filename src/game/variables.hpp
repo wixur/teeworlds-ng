@@ -63,6 +63,9 @@ MACRO_CONFIG_INT(cl_hud_miniscore_transparent, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_S
 MACRO_CONFIG_STR(cl_hud_view, 128, "hnanc", CFGFLAG_CLIENT|CFGFLAG_SAVE, "Hud view")
 MACRO_CONFIG_INT(cl_hud_tdtw_timer, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Timer as in tdtw")
 
+/*Cheat branch*/
+MACRO_CONFIG_INT(cl_flagdirection, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Flagdirection")
+
 
 MACRO_CONFIG_INT(gfx_red_hud_color_r, 255, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
 MACRO_CONFIG_INT(gfx_red_hud_color_g, 127, 0, 255, CFGFLAG_CLIENT|CFGFLAG_SAVE, "")
