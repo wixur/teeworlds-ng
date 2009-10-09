@@ -288,10 +288,10 @@ void SCOREBOARD::render_new()
 
 	float width = 400*3.0f*gfx_screenaspect();
 	float height = 400*3.0f;
-
-	float w = 1400.0f;
+	float w = 800.0f;
+    if(config.cl_new_scoreboard_full)
+        w= w+600.0f;
 	float h = 900.0f;
-
 	float x = (width - w) / 2;
 	float y = (height - h) / 2;
 
@@ -375,7 +375,8 @@ void SCOREBOARD::render_new()
 
 	ui_vsplit_l(&header, 75.0f, 0, &header);
 	
-	{
+	if(config.cl_new_scoreboard_full)
+    {
 		RECT line_t = header;
 		line_t.x += abs(-45.0f - gfx_text_width(0, header.h * 0.8f, localize("Deaths"), -1)) / 2.0f;
 		ui_do_label(&line_t, localize("Deaths"), header.h * 0.8f, -1);
@@ -383,12 +384,15 @@ void SCOREBOARD::render_new()
 
 	float sprite_size = header.h * 0.8f;
 	float spacing;
-	if (gameclient.snap.gameobj->flags&GAMEFLAG_FLAGS)
-		spacing = (header_width - 50.0f - 350.0f - 125.0f - 75.0f) / (NUM_WEAPONS + 3);
-	else
-		spacing = (header_width - 50.0f - 350.0f - 125.0f - 75.0f) / (NUM_WEAPONS + 2);
-
-
+    if(config.cl_new_scoreboard_full)
+            {
+        	if (gameclient.snap.gameobj->flags&GAMEFLAG_FLAGS)
+	    	    spacing = (header_width - 50.0f - 350.0f - 125.0f - 75.0f) / (NUM_WEAPONS + 3);
+	         else
+		        spacing = (header_width - 50.0f - 350.0f - 125.0f - 75.0f) / (NUM_WEAPONS + 2);
+            }
+    if(config.cl_new_scoreboard_full)
+    {
 	gfx_texture_set(data->images[IMAGE_GAME].id);
 	gfx_quads_begin();
 
@@ -425,6 +429,7 @@ void SCOREBOARD::render_new()
 	}
 
 	gfx_quads_end();
+    }
 
 	main_view.y = y + 35.0f;
 	main_view.h = h - 70.0f - 70.0f * 3 - 15.0f;
@@ -500,7 +505,10 @@ void SCOREBOARD::render_new()
 				int score = team ? gameclient.snap.gameobj->teamscore_blue : gameclient.snap.gameobj->teamscore_red;
 				str_format(buf, sizeof(buf), "%d", score);
 
-				line2.x += abs(400.0f - gfx_text_width(0, line_height * 0.8f * 2.0f, buf, -1)) / 2.0f;
+                if(config.cl_new_scoreboard_full)
+				line2.x += abs(350.0f - gfx_text_width(0, line_height * 0.8f * 2.0f, buf, -1)) / 2.0f;
+                else
+			    line2.x += abs(w - gfx_text_width(0, line_height * 0.8f * 1.0f, buf, -1)) / 2.0f;
 				line2.w = line.w - line2.x + line.x;
 				ui_do_label(&line2, buf, line_height * 0.8f * 2.0f, -1);
 
@@ -508,7 +516,10 @@ void SCOREBOARD::render_new()
 
 				line2 = line;
 				str_format(buf, sizeof(buf), "%d", num_players);
-				line2.x += abs(400.0f - gfx_text_width(0, line_height * 0.8f * 1.0f, buf, -1)) / 2.0f;
+                if(config.cl_new_scoreboard_full)
+				line2.x += abs(350.0f - gfx_text_width(0, line_height * 0.8f * 1.0f, buf, -1)) / 2.0f;
+                else
+			    line2.x += abs(gfx_text_width(0, line_height * 0.8f * 1.0f, buf, -1)) / 2.0f;
 				line2.w = line.w - line2.x + line.x;
 				line2.y += line_height * 0.5f;
 				line2.h = line.h - line2.y + line.y;
@@ -573,7 +584,10 @@ void SCOREBOARD::render_new()
 			line2 = line;
 			char buf[128];
 			str_format(buf, sizeof(buf), "%d", num_players);
+            if(config.cl_new_scoreboard_full)
 			line2.x += abs(400.0f - gfx_text_width(0, line_height * 0.8f * 1.0f, buf, -1)) / 2.0f;
+            else
+			line2.x += abs(gfx_text_width(0, line_height * 0.8f * 1.0f, buf, -1)) / 2.0f;
 			line2.w = line.w - line2.x + line.x;
 			line2.y += line_height * 0.5f;
 			line2.h = line.h - line2.y + line.y;
@@ -616,9 +630,15 @@ void SCOREBOARD::render_new()
 			render_tee(ANIMSTATE::get_idle(), &teeinfo, EMOTE_NORMAL, vec2(1,0), vec2(line.x + abs(75.0f - teeinfo.size) / 2.0f, line.y + teeinfo.size / 2.0f));
 
 			ui_vsplit_l(&line, 50.0f, 0, &line);
-
 			ui_do_label(&line, gameclient.clients[info->cid].name, line_height * 0.8f, -1);
-
+            char buf2[128];
+            if(config.cl_new_scoreboard_id)
+            {
+            str_format(buf2,sizeof(buf2),"id: %d",info->cid);
+			ui_vsplit_l(&line, -120.0f, 0, &line);
+            ui_do_label(&line, buf2 , line_height * 0.8, -1);
+			ui_vsplit_l(&line, 120.0f, 0, &line);
+            }
 			ui_vsplit_l(&line, 350.0f, 0, &line);
 
 			if (team != 2)
@@ -637,7 +657,8 @@ void SCOREBOARD::render_new()
 				line_t.x += abs(75.0f - gfx_text_width(0, line_height * 0.8f, buf, -1)) / 2.0f;
 				ui_do_label(&line_t, buf, line_height * 0.8f, -1);
 			}
-
+        if(config.cl_new_scoreboard_full)
+        {
 			if (team != 2)
 			{
 				ui_vsplit_l(&line, 75.0f, 0, &line);
@@ -647,7 +668,7 @@ void SCOREBOARD::render_new()
 					if (gameclient.clients[info->cid].stats.total_kills - gameclient.clients[info->cid].stats.total_killed != 0 || gameclient.clients[info->cid].stats.total_killed != 0)
 						str_format(buf, sizeof(buf), "%d/%.1f", gameclient.clients[info->cid].stats.total_kills - gameclient.clients[info->cid].stats.total_killed, gameclient.clients[info->cid].stats.total_killed == 0 ? 0.0f : (float)((float)gameclient.clients[info->cid].stats.total_kills / (float)gameclient.clients[info->cid].stats.total_killed));
 					else
-						str_format(buf, sizeof(buf), "---");
+						str_format(buf, sizeof(buf),"---");
 					line_t.x += abs(spacing - gfx_text_width(0, line_height * 0.8f, buf, -1)) / 2.0f;
 					ui_do_label(&line_t, buf, line_height * 0.8f, -1);
 				}
@@ -689,6 +710,7 @@ void SCOREBOARD::render_new()
 					ui_do_label(&line_t, buf, line_height * 0.8f, -1);
 				}
 			}
+        }
 			ui_hsplit_t(&main_view, line_height, 0, &main_view);
 		}
 	}

@@ -56,6 +56,8 @@ MACRO_CONFIG_INT(cl_nameplates_shadow, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Na
 MACRO_CONFIG_INT(cl_show_ghost, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Show latency ghost behind you")
 MACRO_CONFIG_INT(gfx_custom_hud_colors, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Custom hud colors")
 MACRO_CONFIG_INT(cl_new_scoreboard, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Use new scoreboard")
+MACRO_CONFIG_INT(cl_new_scoreboard_id, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Show id in new scoreboard")
+MACRO_CONFIG_INT(cl_new_scoreboard_full, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Hide stats in new scoreboard")
 
 MACRO_CONFIG_INT(cl_hud_miniscore_transparent, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Transparent miniscore")
 MACRO_CONFIG_STR(cl_hud_view, 128, "hnanc", CFGFLAG_CLIENT|CFGFLAG_SAVE, "Hud view")
