@@ -34,6 +34,7 @@ class GAMECLIENT
 
 	static void con_team(void *result, void *user_data);
 	static void con_kill(void *result, void *user_data);
+	static void con_dummy(void *result, void *user_data);
 	
 	static void conchain_special_infoupdate(void *result, void *user_data, CONSOLE_CALLBACK cb, void *cbuser);
 	

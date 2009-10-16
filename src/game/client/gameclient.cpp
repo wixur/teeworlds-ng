@@ -244,7 +244,8 @@ void GAMECLIENT::on_console_init()
 	MACRO_REGISTER_COMMAND("set_team", "ii", CFGFLAG_SERVER, con_serverdummy, 0, "Set team of player to team");
 	MACRO_REGISTER_COMMAND("addvote", "r", CFGFLAG_SERVER, con_serverdummy, 0, "Add a voting option");
 	/*MACRO_REGISTER_COMMAND("vote", "", CFGFLAG_SERVER, con_serverdummy, 0);*/
-	
+	MACRO_REGISTER_COMMAND("+dynamiccamera", "", CFGFLAG_SERVER, con_dummy, 0, "");
+    
 	// let all the other components register their console commands
 	for(int i = 0; i < all.num; i++)
 		all.components[i]->on_console_init();
@@ -710,6 +711,24 @@ void GAMECLIENT::process_events()
 			gameclient.sounds->play(SOUNDS::CHN_WORLD, ev->soundid, 1.0f, vec2(ev->x, ev->y));
 		}
 	}
+    if(config.cl_dynamic_camera_key)
+    {
+        const char *charkey = (gameclient.binds->get_key("+dynamiccamera"));
+        int key = (gameclient.binds->get_key_id(charkey));
+        if(inp_key_pressed(key))
+        {
+        config.cl_mouse_max_distance = 800;
+        config.cl_mouse_deadzone = 350;
+        while(config.cl_mouse_followfactor !=400)
+        config.cl_mouse_followfactor += 1 ;
+        }
+        else 
+        {
+        config.cl_mouse_max_distance = 400;
+        config.cl_mouse_deadzone = 0;
+        config.cl_mouse_followfactor = 0;
+        }
+    }
 }
 
 void GAMECLIENT::on_snapshot()
@@ -1073,6 +1092,11 @@ void GAMECLIENT::con_team(void *result, void *user_data)
 void GAMECLIENT::con_kill(void *result, void *user_data)
 {
 	((GAMECLIENT*)user_data)->send_kill(-1);
+}
+
+void GAMECLIENT::con_dummy(void *result, void *user_data)
+{
+    /* do nothing */
 }
 
 void GAMECLIENT::conchain_special_infoupdate(void *result, void *user_data, CONSOLE_CALLBACK cb, void *cbuser)

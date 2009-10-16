@@ -4,7 +4,6 @@ class BINDS : public COMPONENT
 {
 	char keybindings[KEY_LAST][128];
 
-	int get_key_id(const char *key_name);
 
 	static void con_bind(void *result, void *user_data);
 	static void con_unbind(void *result, void *user_data);
@@ -23,6 +22,7 @@ public:
 	
 	BINDS_SPECIAL special_binds;
 	
+	int get_key_id(const char *key_name);
 	void bind(int keyid, const char *str);
 	void set_defaults();
 	void unbindall();
