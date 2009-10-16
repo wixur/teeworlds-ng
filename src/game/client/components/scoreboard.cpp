@@ -769,9 +769,9 @@ void SCOREBOARD::on_render()
 		{
 			const char *text = localize("Draw");
 			if(gameclient.snap.gameobj->teamscore_red > gameclient.snap.gameobj->teamscore_blue)
-				text = localize("Blue team wins");
-			else if(gameclient.snap.gameobj->teamscore_blue > gameclient.snap.gameobj->teamscore_red)
 				text = localize("Red team wins");
+			else if(gameclient.snap.gameobj->teamscore_blue > gameclient.snap.gameobj->teamscore_red)
+				text = localize("Blue team wins");
 
 			float w = gfx_text_width(0, 92.0f, text, -1);
 			gfx_text(0, width/2-w/2, 45, 92.0f, text, -1);
