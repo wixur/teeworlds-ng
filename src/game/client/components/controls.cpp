@@ -60,6 +60,25 @@ void CONTROLS::on_console_init()
 	{ static INPUTSET set = {this, &input_data.wanted_weapon, 3};  MACRO_REGISTER_COMMAND("+weapon3", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to shotgun"); }
 	{ static INPUTSET set = {this, &input_data.wanted_weapon, 4};  MACRO_REGISTER_COMMAND("+weapon4", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to grenade"); }
 	{ static INPUTSET set = {this, &input_data.wanted_weapon, 5};  MACRO_REGISTER_COMMAND("+weapon5", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to rifle"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 6};  MACRO_REGISTER_COMMAND("+weapon6", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 6"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 7};  MACRO_REGISTER_COMMAND("+weapon7", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 7"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 8};  MACRO_REGISTER_COMMAND("+weapon8", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 8"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 9};  MACRO_REGISTER_COMMAND("+weapon9", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 9"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 10};  MACRO_REGISTER_COMMAND("+weapon10", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 10"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 11};  MACRO_REGISTER_COMMAND("+weapon11", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 11"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 12};  MACRO_REGISTER_COMMAND("+weapon12", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 12"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 13};  MACRO_REGISTER_COMMAND("+weapon13", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 13"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 14};  MACRO_REGISTER_COMMAND("+weapon14", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 14"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 15};  MACRO_REGISTER_COMMAND("+weapon15", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 15"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 16};  MACRO_REGISTER_COMMAND("+weapon16", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 16"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 17};  MACRO_REGISTER_COMMAND("+weapon17", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 17"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 18};  MACRO_REGISTER_COMMAND("+weapon18", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 18"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 19};  MACRO_REGISTER_COMMAND("+weapon19", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 19"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 20};  MACRO_REGISTER_COMMAND("+weapon20", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 20"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 21};  MACRO_REGISTER_COMMAND("+weapon21", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 21"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 22};  MACRO_REGISTER_COMMAND("+weapon22", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 22"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 23};  MACRO_REGISTER_COMMAND("+weapon23", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 23"); }
+	{ static INPUTSET set = {this, &input_data.wanted_weapon, 24};  MACRO_REGISTER_COMMAND("+weapon24", "", CFGFLAG_CLIENT, con_key_input_set, (void *)&set, "Switch to 24"); }
 
 	{ static INPUTSET set = {this, &input_data.next_weapon, 0};  MACRO_REGISTER_COMMAND("+nextweapon", "", CFGFLAG_CLIENT, con_key_input_nextprev_weapon, (void *)&set, "Switch to next weapon"); }
 	{ static INPUTSET set = {this, &input_data.prev_weapon, 0};  MACRO_REGISTER_COMMAND("+prevweapon", "", CFGFLAG_CLIENT, con_key_input_nextprev_weapon, (void *)&set, "Switch to previous weapon"); }
