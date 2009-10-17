@@ -444,10 +444,16 @@ int netserver_send(NETSERVER *s, NETCHUNK *chunk)
 		if(chunk->flags&NETSENDFLAG_VITAL)
 			f = NET_CHUNKFLAG_VITAL;
 		
-		conn_queue_chunk(&s->slots[chunk->client_id].conn, f, chunk->data_size, chunk->data);
+		if(conn_queue_chunk(&s->slots[chunk->client_id].conn, f, chunk->data_size, chunk->data) == 0)
+		{
+			if(chunk->flags&NETSENDFLAG_FLUSH)
+				conn_flush(&s->slots[chunk->client_id].conn);
+		}
+		else
+		{
+			netserver_drop(s, chunk->client_id, "error sending data");
+		}
 
-		if(chunk->flags&NETSENDFLAG_FLUSH)
-			conn_flush(&s->slots[chunk->client_id].conn);
 	}
 	return 0;
 }
