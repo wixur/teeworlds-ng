@@ -85,7 +85,7 @@ int conn_flush(NETCONNECTION *conn)
 	return num_chunks;
 }
 
-static void conn_queue_chunk_ex(NETCONNECTION *conn, int flags, int data_size, const void *data, int sequence)
+static int conn_queue_chunk_ex(NETCONNECTION *conn, int flags, int data_size, const void *data, int sequence)
 {
 	unsigned char *chunk_data;
 	
@@ -123,15 +123,18 @@ static void conn_queue_chunk_ex(NETCONNECTION *conn, int flags, int data_size, c
 		{
 			/* out of buffer */
 			conn_disconnect(conn, "too weak connection (out of buffer)");
+			return -1;
 		}
 	}
+	
+	return 0;
 }
 
-void conn_queue_chunk(NETCONNECTION *conn, int flags, int data_size, const void *data)
+int conn_queue_chunk(NETCONNECTION *conn, int flags, int data_size, const void *data)
 {
 	if(flags&NET_CHUNKFLAG_VITAL)
 		conn->seq = (conn->seq+1)%NET_MAX_SEQUENCE;
-	conn_queue_chunk_ex(conn, flags, data_size, data, conn->seq);
+	return conn_queue_chunk_ex(conn, flags, data_size, data, conn->seq);
 }
 
 

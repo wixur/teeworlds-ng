@@ -674,7 +674,7 @@ int net_udp_send(NETSOCKET sock, const NETADDR *addr, const void *data, int size
 	mem_zero(&sa, sizeof(sa));
 	netaddr_to_sockaddr(addr, &sa);
 	d = sendto((int)sock, (const char*)data, size, 0, &sa, sizeof(sa));
-	if(d < 0)
+	/*if(d < 0)
 	{
 		char addrstr[256];
 		net_addr_str(addr, addrstr, sizeof(addrstr));
@@ -684,7 +684,7 @@ int net_udp_send(NETSOCKET sock, const NETADDR *addr, const void *data, int size
 		dbg_msg("net", "\tsize = %d %x", size, size);
 		dbg_msg("net", "\taddr = %s", addrstr);
 
-	}
+	}*/
 	network_stats.sent_bytes += size;
 	network_stats.sent_packets++;
 	return d;
