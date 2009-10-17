@@ -135,7 +135,7 @@ int conn_connect(NETCONNECTION *conn, NETADDR *addr);
 void conn_disconnect(NETCONNECTION *conn, const char *reason);
 int conn_update(NETCONNECTION *conn);
 int conn_feed(NETCONNECTION *conn, NETPACKETCONSTRUCT *packet, NETADDR *addr);
-void conn_queue_chunk(NETCONNECTION *conn, int flags, int data_size, const void *data);
+int conn_queue_chunk(NETCONNECTION *conn, int flags, int data_size, const void *data);
 const char *conn_error(NETCONNECTION *conn);
 void conn_want_resend(NETCONNECTION *conn);
 int conn_flush(NETCONNECTION *conn);
