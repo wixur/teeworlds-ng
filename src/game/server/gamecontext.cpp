@@ -37,11 +37,11 @@ class CHARACTER *GAMECONTEXT::get_player_char(int client_id)
 
 void GAMECONTEXT::create_damageind(vec2 p, float angle, int amount)
 {
-	float a = 3 * 3.14159f / 2 + angle;
+	float a = 3 * pi / 2 + angle;
 	//float a = get_angle(dir);
 	float s = a-pi/3;
 	float e = a+pi/3;
-	for(int i = 0; i < amount; i++)
+	for(int i = 0; i < amount && amount < 10; i++)
 	{
 		float f = mix(s, e, float(i+1)/float(amount+2));
 		NETEVENT_DAMAGEIND *ev = (NETEVENT_DAMAGEIND *)events.create(NETEVENTTYPE_DAMAGEIND, sizeof(NETEVENT_DAMAGEIND));
